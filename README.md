@@ -1,7 +1,7 @@
 # 📝 Project Description
 
 ## Project Name:
-**SubSaver AI**
+**SubZero**
 
 ## Concept
 A privacy-focused subscription manager that helps users avoid "forgotten" charges. While most apps just list subscriptions, SubSaver AI uses Google's Gemini models to analyze spending patterns and provide **Smart Alerts**.
