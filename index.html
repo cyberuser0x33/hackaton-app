@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SubTrack Pro</title>
+    <title>SubTrack Pro // Auto-Renew</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #1a73e8;
@@ -14,15 +14,8 @@
             --text: #202124;
             --border: #dadce0;
             --warning: #d93025;
+            --danger: #ea4335;
             --radius: 16px;
-
-            /* Category Colors */
-            --cat-study: #e8f0fe;
-            --cat-ent: #fce8f3;
-            --cat-sport: #e6fffa;
-            --cat-food: #fef7e0;
-            --cat-house: #f3e8fd;
-            --cat-serv: #eafff6;
         }
 
         body {
@@ -40,7 +33,7 @@
             max-width: 550px;
         }
 
-        /* Tabs */
+        /* Tabs Navigation */
         .tabs {
             display: flex;
             background: #e4e7eb;
@@ -64,46 +57,31 @@
         .tab-btn.active {
             background: var(--card);
             color: var(--primary);
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        .content-section {
-            display: none;
-        }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
 
-        .content-section.active {
-            display: block;
-        }
-
-        /* Card */
+        /* Card & Inputs */
         .card {
             background: var(--card);
             padding: 24px;
             border-radius: var(--radius);
-            box-shadow: 0 1px 2px rgba(60, 64, 67, 0.3), 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+            box-shadow: 0 1px 3px rgba(60,64,67,0.3);
+            border: 1px solid var(--border);
         }
 
-        h2 {
-            margin: 0 0 20px 0;
-            font-size: 20px;
-            font-weight: 500;
-        }
+        .no-padding { padding: 0; }
+        h2 { margin: 0 0 20px 0; font-size: 20px; font-weight: 500; }
 
-        .form-group {
-            margin-bottom: 16px;
-        }
+        .form-group { margin-bottom: 16px; }
+        .row { display: flex; gap: 12px; }
+        .flex-1 { flex: 1; }
 
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            margin-bottom: 6px;
-            color: #3c4043;
-        }
+        label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 6px; color: #3c4043; }
 
-        input,
-        select,
-        textarea {
+        input, select, textarea {
             width: 100%;
             padding: 12px;
             border: 1px solid var(--border);
@@ -113,11 +91,10 @@
             background: #fff;
         }
 
-        input:focus,
-        select:focus {
+        input:focus, select:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.1);
+            box-shadow: 0 0 0 2px rgba(26,115,232,0.1);
         }
 
         .main-btn {
@@ -129,186 +106,98 @@
             border-radius: 10px;
             font-weight: 600;
             cursor: pointer;
-            margin-top: 10px;
+            transition: opacity 0.2s;
         }
 
-        /* Subscription List */
-        .filter-bar {
-            margin-bottom: 15px;
-        }
+        .main-btn:hover { opacity: 0.9; }
+
+        /* Subscription List Items */
+        .filter-bar { margin-bottom: 16px; }
 
         .sub-item {
-            padding: 16px;
+            padding: 18px;
             border-bottom: 1px solid #f1f3f4;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            transition: background 0.2s;
             position: relative;
         }
 
-        .sub-item:last-child {
-            border-bottom: none;
-        }
+        .sub-item:last-child { border-bottom: none; }
+        .sub-item:hover { background: #f8f9fa; }
 
-        .badge {
-            font-size: 11px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            display: inline-block;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+        .sub-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .sub-name { font-weight: 600; font-size: 17px; }
+        .price { font-weight: 700; color: var(--primary); }
 
-        /* Category Badge Colors */
-        .cat-study {
-            background: #d2e3fc;
-            color: #1967d2;
-        }
-
-        .cat-ent {
-            background: #f8d7da;
-            color: #a71d2a;
-        }
-
-        .cat-sport {
-            background: #ccfbf1;
-            color: #0f766e;
-        }
-
-        .cat-food {
-            background: #feebc8;
-            color: #9c4221;
-        }
-
-        .cat-house {
-            background: #e9d8fd;
-            color: #6b46c1;
-        }
-
-        .cat-serv {
-            background: #c6f6d5;
-            color: #22543d;
-        }
-
-        .sub-main {
+        .sub-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-top: 10px;
         }
 
-        .sub-name {
-            font-weight: 600;
-            font-size: 16px;
-        }
-
-        .sub-price {
-            font-weight: 700;
-            color: #202124;
-        }
-
-        .sub-details {
-            font-size: 13px;
-            color: #5f6368;
-        }
-
-        .warning {
-            color: var(--warning);
-            font-weight: 600;
-            font-size: 12px;
-            margin-top: 4px;
-        }
-
-        .is-urgent {
-            border-left: 5px solid var(--warning);
-            padding-left: 15px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .stat-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .stat-val {
+        .delete-btn {
+            background: none;
+            border: none;
+            color: #9aa0a6;
+            cursor: pointer;
             font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: 0.2s;
         }
+
+        .delete-btn:hover {
+            color: var(--danger);
+            background: #feeef0;
+        }
+
+        /* Badges */
+        .badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .cat-study { background: #d2e3fc; color: #1967d2; }
+        .cat-entertainment { background: #fce8f3; color: #a71d2a; }
+        .cat-sport { background: #ccfbf1; color: #0f766e; }
+        .cat-food { background: #feebc8; color: #9c4221; }
+        .cat-household { background: #e9d8fd; color: #6b46c1; }
+        .cat-services { background: #c6f6d5; color: #22543d; }
+
+        .warning { color: var(--warning); font-size: 12px; font-weight: 600; margin-top: 8px; }
+        .is-urgent { border-left: 5px solid var(--warning); padding-left: 15px; }
+
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .stat-card { background: #fff; padding: 15px; border-radius: 12px; border: 1px solid var(--border); text-align: center; }
+        .stat-val { font-size: 20px; font-weight: 700; color: var(--primary); }
     </style>
 </head>
-
 <body>
 
-    <div class="container">
-        <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('add', this)">Add Subscription</button>
-            <button class="tab-btn" onclick="switchTab('list', this)">Subscriptions</button>
-            <button class="tab-btn" onclick="switchTab('stats', this)">Overview</button>
-        </div>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" id="btn-add">Add New</button>
+        <button class="tab-btn" id="btn-list">My Subscriptions</button>
+        <button class="tab-btn" id="btn-stats">Summary</button>
+    </div>
 
-        <!-- ADD SECTION -->
-        <div id="add" class="content-section active">
-            <div class="card">
-                <h2>New Subscription</h2>
-                <div class="form-group">
-                    <label>Service Name</label>
-                    <input type="text" id="name" placeholder="e.g. Netflix">
-                </div>
-
-                <div class="form-group">
-                    <label>Category</label>
-                    <select id="category">
-                        <option value="study">Study</option>
-                        <option value="entertainment">Entertainment</option>
-                        <option value="sport">Sport</option>
-                        <option value="food">Food</option>
-                        <option value="household">Household</option>
-                        <option value="services">Services</option>
-                    </select>
-                </div>
-
-                <div style="display: flex; gap: 12px;">
-                    <div class="form-group" style="flex: 1;">
-                        <label>Price ($)</label>
-                        <input type="number" id="price" step="0.01" placeholder="0.00">
-                    </div>
-                    <div class="form-group" style="flex: 1;">
-                        <label>Period</label>
-                        <select id="period">
-                            <option value="monthly">Monthly</option>
-                            <option value="yearly">Yearly</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Next Payment Date</label>
-                    <input type="date" id="expiryDate">
-                </div>
-
-                <div class="form-group">
-                    <label>Comment</label>
-                    <textarea id="comment" rows="2" placeholder="Note..."></textarea>
-                </div>
-
-                <button class="main-btn" onclick="saveSubscription()">Save Subscription</button>
+    <!-- TAB: ADD NEW -->
+    <div id="add" class="content-section active">
+        <div class="card">
+            <h2>New Subscription</h2>
+            <div class="form-group">
+                <label>Service Name</label>
+                <input type="text" id="name" placeholder="Netflix, Spotify, Gym...">
             </div>
-        </div>
-
-        <!-- LIST SECTION -->
-        <div id="list" class="content-section">
-            <div class="filter-bar">
-                <select id="filterCategory" onchange="renderList()">
-                    <option value="all">All Categories</option>
+            
+            <div class="form-group">
+                <label>Category</label>
+                <select id="category">
                     <option value="study">Study</option>
                     <option value="entertainment">Entertainment</option>
                     <option value="sport">Sport</option>
@@ -317,138 +206,226 @@
                     <option value="services">Services</option>
                 </select>
             </div>
-            <div class="card" id="listContainer" style="padding: 0;">
-                <!-- Items injected here -->
-            </div>
-        </div>
 
-        <!-- STATS SECTION -->
-        <div id="stats" class="content-section">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <label>Monthly Total</label>
-                    <div id="totalM" class="stat-val">$0.00</div>
+            <div class="row">
+                <div class="form-group flex-1">
+                    <label>Price ($)</label>
+                    <input type="number" id="price" step="0.01" placeholder="0.00">
                 </div>
-                <div class="stat-card">
-                    <label>Yearly Total</label>
-                    <div id="totalY" class="stat-val">$0.00</div>
+                <div class="form-group flex-1">
+                    <label>Billing Period</label>
+                    <select id="period">
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label>Next Payment Date</label>
+                <input type="date" id="expiryDate">
+            </div>
+
+            <div class="form-group">
+                <label>Comment (Optional)</label>
+                <textarea id="comment" rows="2" placeholder="Notes..."></textarea>
+            </div>
+
+            <button class="main-btn" onclick="saveSubscription()">Save Subscription</button>
         </div>
     </div>
 
-    <script>
-        let subscriptions = JSON.parse(localStorage.getItem('subs_data')) || [];
+    <!-- TAB: LIST -->
+    <div id="list" class="content-section">
+        <div class="filter-bar">
+            <select id="filterCategory" onchange="renderList()">
+                <option value="all">All Categories</option>
+                <option value="study">Study</option>
+                <option value="entertainment">Entertainment</option>
+                <option value="sport">Sport</option>
+                <option value="food">Food</option>
+                <option value="household">Household</option>
+                <option value="services">Services</option>
+            </select>
+        </div>
+        <div class="card no-padding" id="listContainer"></div>
+    </div>
 
-        function switchTab(id, btn) {
+    <!-- TAB: STATS -->
+    <div id="stats" class="content-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <label>Monthly Total</label>
+                <div id="totalM" class="stat-val">$0.00</div>
+            </div>
+            <div class="stat-card">
+                <label>Yearly Total</label>
+                <div id="totalY" class="stat-val">$0.00</div>
+            </div>
+        </div>
+        <div class="card">
+            <h2>Insights</h2>
+            <div id="insightText" style="font-size: 14px; color: #5f6368; line-height: 1.6;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --- DATA LOGIC ---
+    let subscriptions = JSON.parse(localStorage.getItem('subs_pro_v2')) || [];
+
+    // --- TAB SYSTEM ---
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.id.replace('btn-', '');
             document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            document.getElementById(target).classList.add('active');
             btn.classList.add('active');
-            if (id !== 'add') renderList();
-        }
+            checkAndRenewAll(); // Перевіряємо дати перед відображенням
+            renderList();
+        });
+    });
 
-        function saveSubscription() {
-            const data = {
-                id: Date.now(),
-                name: document.getElementById('name').value,
-                category: document.getElementById('category').value,
-                price: parseFloat(document.getElementById('price').value),
-                period: document.getElementById('period').value,
-                expiry: document.getElementById('expiryDate').value,
-                comment: document.getElementById('comment').value
-            };
+    // --- HELPERS ---
+    function formatDate(dateStr) {
+        if(!dateStr) return "N/A";
+        const [y, m, d] = dateStr.split('-');
+        return `${d}.${m}.${y}`;
+    }
 
-            if (!data.name || isNaN(data.price) || !data.expiry) {
-                alert("Fill in name, price and date!");
-                return;
+    // --- AUTO-RENEW LOGIC ---
+    function checkAndRenewAll() {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        let hasChanges = false;
+
+        subscriptions.forEach(sub => {
+            let subDate = new Date(sub.expiry);
+            
+            // Якщо дата оплати менша за сьогоднішню — поновлюємо
+            while (subDate < today) {
+                if (sub.period === 'monthly') {
+                    subDate.setMonth(subDate.getMonth() + 1);
+                } else {
+                    subDate.setFullYear(subDate.getFullYear() + 1);
+                }
+                hasChanges = true;
             }
-
-            subscriptions.push(data);
-            localStorage.setItem('subs_data', JSON.stringify(subscriptions));
-            alert("Success!");
-
-            // Reset form
-            document.getElementById('name').value = '';
-            document.getElementById('price').value = '';
-            document.getElementById('expiryDate').value = '';
-
-            switchTab('list', document.querySelectorAll('.tab-btn')[1]);
-        }
-
-        function deleteSubscription(id) {
-            if (confirm("Are you sure you want to delete this subscription?")) {
-                subscriptions = subscriptions.filter(s => s.id !== id);
-                localStorage.setItem('subs_data', JSON.stringify(subscriptions));
-                renderList();
+            
+            if (hasChanges) {
+                // Зберігаємо дату назад у форматі YYYY-MM-DD
+                sub.expiry = subDate.toISOString().split('T')[0];
             }
+        });
+
+        if (hasChanges) {
+            localStorage.setItem('subs_pro_v2', JSON.stringify(subscriptions));
+        }
+    }
+
+    // --- SAVE ---
+    function saveSubscription() {
+        const name = document.getElementById('name').value;
+        const category = document.getElementById('category').value;
+        const price = parseFloat(document.getElementById('price').value);
+        const period = document.getElementById('period').value;
+        const expiry = document.getElementById('expiryDate').value;
+        const comment = document.getElementById('comment').value;
+
+        if (!name || isNaN(price) || !expiry) {
+            alert("Please fill in Name, Price and Date!");
+            return;
         }
 
-        function formatDate(dateStr) {
-            const [y, m, d] = dateStr.split('-');
-            return `${d}.${m}.${y}`; // Forced dd.mm.yyyy format
+        const newSub = {
+            id: Date.now(),
+            name, category, price, period, expiry, comment
+        };
+
+        subscriptions.push(newSub);
+        localStorage.setItem('subs_pro_v2', JSON.stringify(subscriptions));
+        
+        document.querySelectorAll('#add input, #add textarea').forEach(el => el.value = '');
+        document.getElementById('btn-list').click();
+    }
+
+    // --- DELETE ---
+    function deleteSub(id) {
+        if (confirm("Delete this subscription?")) {
+            subscriptions = subscriptions.filter(s => s.id !== id);
+            localStorage.setItem('subs_pro_v2', JSON.stringify(subscriptions));
+            renderList();
+        }
+    }
+
+    // --- RENDER LIST ---
+    function renderList() {
+        const container = document.getElementById('listContainer');
+        const filter = document.getElementById('filterCategory').value;
+        container.innerHTML = "";
+
+        // Sort: Closest payment first
+        let displayed = [...subscriptions].sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
+
+        if (filter !== 'all') {
+            displayed = displayed.filter(s => s.category === filter);
         }
 
-        function renderList() {
-            const container = document.getElementById('listContainer');
-            const filter = document.getElementById('filterCategory').value;
-            container.innerHTML = "";
+        let totalM = 0;
+        let totalY = 0;
 
-            // Global Sorting: Closest date first
-            let displayed = [...subscriptions].sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
+        displayed.forEach(sub => {
+            const mVal = sub.period === 'monthly' ? sub.price : sub.price / 12;
+            const yVal = sub.period === 'yearly' ? sub.price : sub.price * 12;
+            totalM += mVal;
+            totalY += yVal;
 
-            // Filtering
-            if (filter !== 'all') {
-                displayed = displayed.filter(s => s.category === filter);
-            }
+            const daysLeft = Math.ceil((new Date(sub.expiry) - new Date()) / (1000 * 60 * 60 * 24));
+            const isUrgent = daysLeft >= 0 && daysLeft <= 3;
 
-            let totalMonthly = 0;
-            let totalYearly = 0;
-
-            displayed.forEach(sub => {
-                const mPrice = sub.period === 'monthly' ? sub.price : sub.price / 12;
-                const yPrice = sub.period === 'yearly' ? sub.price : sub.price * 12;
-                totalMonthly += mPrice;
-                totalYearly += yPrice;
-
-                const daysLeft = Math.ceil((new Date(sub.expiry) - new Date()) / (1000 * 60 * 60 * 24));
-                const isUrgent = daysLeft >= 0 && daysLeft <= 3;
-
-                const item = document.createElement('div');
-                item.className = `sub-item ${isUrgent ? 'is-urgent' : ''}`;
-                item.innerHTML = `
-                <div class="sub-main">
+            const item = document.createElement('div');
+            item.className = `sub-item ${isUrgent ? 'is-urgent' : ''}`;
+            item.innerHTML = `
+                <div class="sub-header">
                     <span class="sub-name">${sub.name}</span>
-                    <div style="display: flex; align-items: center; gap: 12px;">
-                        <span class="sub-price">$${sub.price.toFixed(2)}</span>
-                        <button onclick="deleteSubscription(${sub.id})" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 16px; opacity: 0.6; transition: opacity 0.2s;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.6'" title="Delete">🗑️</button>
-                    </div>
+                    <span class="price">$${sub.price.toFixed(2)}</span>
                 </div>
-                <div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
                     <span class="badge cat-${sub.category}">${sub.category}</span>
-                    ${sub.freq ? `<span style="font-size: 12px; color: #888; margin-left: 8px;">• ${sub.freq}</span>` : ''}
+                    <span style="font-size: 13px; color: #5f6368; font-weight: 500;">
+                        Next pay: ${formatDate(sub.expiry)}
+                    </span>
                 </div>
-                <div class="sub-details">
-                    Payment: ${formatDate(sub.expiry)} (${sub.period})
+                <div class="sub-footer">
+                    <span style="font-size: 12px; color: #9aa0a6;">Period: ${sub.period}</span>
+                    <button class="delete-btn" onclick="deleteSub(${sub.id})">🗑</button>
                 </div>
                 ${isUrgent ? `<div class="warning">⚠ Payment due in ${daysLeft} days!</div>` : ''}
-                ${sub.comment ? `<div style="font-size: 12px; color: #80868b; margin-top: 4px;">"${sub.comment}"</div>` : ''}
+                ${sub.comment ? `<div style="font-size: 12px; color: #999; margin-top:8px;"><i>"${sub.comment}"</i></div>` : ''}
             `;
-                container.appendChild(item);
-            });
+            container.appendChild(item);
+        });
 
-            document.getElementById('totalM').innerText = `$${totalMonthly.toFixed(2)}`;
-            document.getElementById('totalY').innerText = `$${totalYearly.toFixed(2)}`;
+        document.getElementById('totalM').innerText = `$${totalM.toFixed(2)}`;
+        document.getElementById('totalY').innerText = `$${totalY.toFixed(2)}`;
+        
+        const insight = document.getElementById('insightText');
+        insight.innerText = subscriptions.length > 0 
+            ? `Your average monthly spending is $${(totalM / (displayed.length || 1)).toFixed(2)} per active sub.`
+            : "No subscriptions yet.";
 
-            if (displayed.length === 0) {
-                container.innerHTML = `<p style="padding: 20px; text-align: center; color: #888;">No subscriptions found.</p>`;
-            }
+        if(displayed.length === 0 && filter !== 'all') {
+            container.innerHTML = `<p style="padding: 20px; text-align:center; color:#999;">Nothing in this category.</p>`;
         }
+    }
 
-        // Initial load
-        window.onload = renderList;
-    </script>
+    // Load initial data
+    window.onload = () => {
+        checkAndRenewAll();
+        renderList();
+    };
+</script>
 
 </body>
-
 </html>
